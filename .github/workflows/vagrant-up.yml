@@ -17,6 +17,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-vagrant-
 
+      - name: install vagrant
+        run: apt update && apt install vagrant
+
       - name: Show Vagrant version
         run: vagrant --version
 
