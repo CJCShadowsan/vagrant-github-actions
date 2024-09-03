@@ -18,7 +18,7 @@ jobs:
             ${{ runner.os }}-vagrant-
 
       - name: install vagrant
-        run: sudo apt update && apt install vagrant
+        run: sudo apt update && sudo apt install vagrant
 
       - name: Show Vagrant version
         run: vagrant --version
