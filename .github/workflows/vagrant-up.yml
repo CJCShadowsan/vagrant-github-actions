@@ -4,24 +4,30 @@ on: [push]
 
 jobs:
   vagrant-up:
-    runs-on: macos-10.15
+    runs-on: ubuntu-24.04
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Cache Vagrant boxes
-      uses: actions/cache@v2
-      with:
-        path: ~/.vagrant.d/boxes
-        key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
-        restore-keys: |
-          ${{ runner.os }}-vagrant-
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v2
+        with:
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-
 
-    - name: Show Vagrant version
-      run: vagrant --version
+      - name: Show Vagrant version
+        run: vagrant --version
 
-    - name: Run vagrant up
-      run: vagrant up
+      - name: Enable KVM group perms
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
 
-    - name: ssh into box after boot
-      run: vagrant ssh -c "echo 'hello world!'"
+      - name: Run vagrant up
+        run: vagrant up
+
+      - name: ssh into box after boot
+        run: vagrant ssh -c "echo 'hello world!'"
