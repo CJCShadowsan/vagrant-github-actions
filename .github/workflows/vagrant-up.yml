@@ -45,7 +45,7 @@ jobs:
             sudo udevadm trigger --name-match=kvm
       
       - name: Run vagrant up
-        run: vagrant up --provider=VirtualBox
+        run: vagrant up --provider=virtualbox
 
       - name: ssh into box after boot
         run: vagrant ssh -c "echo 'hello world!'"
