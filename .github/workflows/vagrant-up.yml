@@ -33,7 +33,7 @@ jobs:
         run: echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] http://download.virtualbox.org/virtualbox/debian $(. /etc/os-release && echo "$VERSION_CODENAME") contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
         
       - name: install VirtualBox
-        run: sudo apt update && sudo apt install virtualbox-7.0
+        run: sudo apt update && sudo apt install virtualbox-6.1
 
       - name: Show Vagrant version
         run: vagrant --version
